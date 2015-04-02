@@ -2,17 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef unsigned char uchar;
-
-// Fill in actual key here
-static const uchar ckey[] = "\x12\x12";
-
 unsigned char indata[AES_BLOCK_SIZE];
 unsigned char outdata[AES_BLOCK_SIZE];
 unsigned char userkey[] = "8Pw6wNc7x6smLffQ";
 unsigned char IV[] = "FuySbnfey2eDSwe7";
 
-int main(void) {
+void encrypt(void) {
+	FILE *ifp, *ofp;
+	ifp = fopen("signature", "r+");
+	ofp = fopen("encrypted", "w+");
 	AES_KEY key;
 	AES_set_encrypt_key(userkey, 128, &key);
 	int postion = 0;
@@ -24,4 +22,10 @@ int main(void) {
 	    if (bytes_read < AES_BLOCK_SIZE)
 			break;
 	}
+	fclose(ifp);
+	fclose(ofp);
+}
+
+int main(void) {
+	encrypt();
 }
